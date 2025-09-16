@@ -16,11 +16,11 @@ WORKDIR /app
 RUN mkdir -p /tmp/torch_cache /tmp/hf_cache && \
     chmod 777 /tmp/torch_cache /tmp/hf_cache
 
-# 종속성 설치 (순서 수정)
+# 종속성 설치 (모든 필요한 라이브러리 한번에)
 RUN pip install --upgrade pip
 RUN pip install flask flask-cors gunicorn
 RUN pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-RUN pip install ultralytics pillow opencv-python-headless numpy pyyaml requests psutil
+RUN pip install ultralytics pillow opencv-python-headless numpy pyyaml requests psutil pandas tqdm seaborn matplotlib scipy
 
 # Flask 백엔드와 모델 복사
 COPY backend/app.py .

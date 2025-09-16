@@ -5,9 +5,16 @@ import gc
 import psutil
 import time
 import torch
+import platform
+import pathlib
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from PIL import Image
+
+# WindowsPath 오류 해결을 위한 우회 코드
+plt = platform.system()
+if plt != 'Windows':
+    pathlib.WindowsPath = pathlib.PosixPath
 
 # CPU 최적화 설정
 os.environ['OMP_NUM_THREADS'] = '1'
@@ -23,11 +30,11 @@ os.environ['HF_HOME'] = '/tmp/hf_cache'
 os.makedirs('/tmp/torch_cache', exist_ok=True)
 os.makedirs('/tmp/hf_cache', exist_ok=True)
 
-# 경로 설정
+# 경로 설정 - 클라우드타입 환경에서 권한 문제 해결
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_PATH = BASE_DIR / 'models' / 'best.pt'
-UPLOAD_DIR = BASE_DIR / 'static' / 'uploads'
-RESULT_DIR = BASE_DIR / 'static' / 'results'
+UPLOAD_DIR = Path('/tmp/uploads')  # /tmp 경로로 변경
+RESULT_DIR = Path('/tmp/results')  # /tmp 경로로 변경
 
 # 설정값
 IMGSZ = (640, 640)
@@ -163,23 +170,24 @@ def predict():
         # 결과 이미지 저장 (직접 저장)
         results.save(save_dir=str(RESULT_DIR))
 
-        # 결과 파일 찾기 - 모든 results 폴더에서 검색
+        # 결과 파일 찾기 - /tmp 디렉토리에서 검색
         result_path = None
 
-        # results, results2, results3 등 모든 폴더에서 검색
-        results_dirs = []
-        base_static_dir = BASE_DIR / 'static'
+        # /tmp 디렉토리에서 results로 시작하는 모든 폴더 찾기
+        results_dirs = [RESULT_DIR]
+        tmp_dir = Path('/tmp')
 
-        # 모든 results 관련 폴더 찾기
-        for item in base_static_dir.iterdir():
-            if item.is_dir() and item.name.startswith('results'):
-                results_dirs.append(item)
+        if tmp_dir.exists():
+            for item in tmp_dir.iterdir():
+                if item.is_dir() and item.name.startswith('results'):
+                    results_dirs.append(item)
 
         # 가장 최근에 생성된 이미지 파일 찾기
         all_result_files = []
         for results_dir in results_dirs:
-            result_files = list(results_dir.glob("*.jpg"))
-            all_result_files.extend(result_files)
+            if results_dir.exists():
+                result_files = list(results_dir.glob("*.jpg"))
+                all_result_files.extend(result_files)
 
         if all_result_files:
             # 가장 최근 생성된 파일 선택
