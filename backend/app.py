@@ -15,6 +15,14 @@ os.environ['MKL_NUM_THREADS'] = '1'
 os.environ['TORCH_NUM_THREADS'] = '1'
 os.environ['TORCH_WEIGHTS_ONLY'] = 'False'
 
+# 클라우드타입 환경에서 캐시 디렉토리 문제 해결
+os.environ['TORCH_HOME'] = '/tmp/torch_cache'
+os.environ['HF_HOME'] = '/tmp/hf_cache'
+
+# 캐시 디렉토리 생성
+os.makedirs('/tmp/torch_cache', exist_ok=True)
+os.makedirs('/tmp/hf_cache', exist_ok=True)
+
 # 경로 설정
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_PATH = BASE_DIR / 'models' / 'best.pt'

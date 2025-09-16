@@ -1,4 +1,4 @@
-# YOLOv5 Flask API - 이전 작동 버전 기반
+# YOLOv5 Flask API - 클라우드타입 최적화 버전
 FROM python:3.8-slim
 
 # 시스템 패키지 설치 (간단하게)
@@ -11,6 +11,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+
+# 캐시 디렉토리 생성 및 권한 설정 (클라우드타입 환경 대응)
+RUN mkdir -p /tmp/torch_cache /tmp/hf_cache && \
+    chmod 777 /tmp/torch_cache /tmp/hf_cache
 
 # 종속성 설치 (순서 수정)
 RUN pip install --upgrade pip
@@ -30,6 +34,8 @@ ENV OMP_NUM_THREADS=1
 ENV MKL_NUM_THREADS=1
 ENV TORCH_NUM_THREADS=1
 ENV PYTHONUNBUFFERED=1
+ENV TORCH_HOME=/tmp/torch_cache
+ENV HF_HOME=/tmp/hf_cache
 
 EXPOSE 5000
 
