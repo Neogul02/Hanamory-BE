@@ -36,6 +36,10 @@ ENV TORCH_NUM_THREADS=1
 ENV PYTHONUNBUFFERED=1
 ENV TORCH_HOME=/tmp/torch_cache
 ENV HF_HOME=/tmp/hf_cache
+ENV MPLCONFIGDIR=/tmp/matplotlib
+ENV PIP_USER=false
+ENV PYTHONUSERBASE=/tmp/python_user
+ENV YOLO_CONFIG_DIR=/tmp/Ultralytics
 
 EXPOSE 5000
 
