@@ -10,7 +10,7 @@
 
 > **Hanamory API** : [API 서버](https://port-0-hanamory-be-m3e7qqcm7e3f3df2.sel4.cloudtype.app/) <br> > **프론트엔드** : [Hanamory FE](https://github.com/Neogul02/Hanamory-FE) <br> > **백엔드** : [Hanamory BE](https://github.com/Neogul02/Hanamory-BE)
 
-## � 팀 소개
+## 🎉 팀 소개
 
 |                                                         최진형                                                         |
 | :--------------------------------------------------------------------------------------------------------------------: |
@@ -18,7 +18,7 @@
 |                                     [@Choe JinHyeong](https://github.com/Neogul02)                                     |
 |                                                  Fullstack Developer                                                   |
 
-## � 프로젝트 소개
+## 🔥 프로젝트 소개
 
 Hanamory는 YOLOv5 커스텀 모델을 활용하여 꽃다발 이미지를 인식하고 분석하는 AI 서비스예요. 사용자가 업로드한 이미지에서 꽃다발을 자동으로 탐지하고, 바운딩 박스가 표시된 이미지와 JSON 형태의 상세 분석 결과를 제공해요. Docker 컨테이너화를 통해 Cloudtype에 배포되어 안정적인 서비스를 제공하고 있어요.
 
@@ -140,7 +140,7 @@ curl -X POST -F "image=@flower.jpg" https://port-0-hanamory-be-m3e7qqcm7e3f3df2.
 
 ---
 
-## � 최적화 및 특징
+## 최적화 및 특징
 
 ### 이미지 처리 최적화
 
