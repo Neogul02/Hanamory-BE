@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # 캐시 디렉토리 생성 및 권한 설정 (클라우드타입 환경 대응)
-RUN mkdir -p /tmp/torch_cache /tmp/hf_cache && \
-    chmod 777 /tmp/torch_cache /tmp/hf_cache
+RUN mkdir -p /tmp/torch_cache /tmp/hf_cache /tmp/matplotlib /tmp/python_user /tmp/Ultralytics && \
+    chmod -R 777 /tmp/torch_cache /tmp/hf_cache /tmp/matplotlib /tmp/python_user /tmp/Ultralytics
 
 # 종속성 설치 (모든 필요한 라이브러리 한번에)
 RUN pip install --upgrade pip
